@@ -42,27 +42,24 @@ presentationBox.style.justifyContent = "space-between";
 
 
 
+// Création de la div pour englober la photo et le texte de présentation
+const introRight = document.querySelector("#introduction article");
+nouvelleDiv = document.createElement("div");
+introRight.appendChild(nouvelleDiv);
+
+
+
 // nouveau titre h2
 newH2 = document.createElement("h2");
-newArticle.appendChild(newH2);
+nouvelleDiv.appendChild(newH2);
 newH2.innerHTML += "Designer d'espace";
 
 // Nouveaux paragraphes
 function newPar() {
     newParagraphe = document.createElement("p");
-    newArticle.appendChild(newParagraphe);
+    nouvelleDiv.appendChild(newParagraphe);
 };
 
-// Nouvelle div
-function nouvelleDiv(e) {
-    newDiv = document.createElement("div");
-    e.appendChild(newDiv);
-};
-
-
-// Création de la div pour englober la photo et le texte de présentation
-nouvelleDiv = document.createElement("div");
-newArticle.appendChild(nouvelleDiv);
 
 
 newPar();
@@ -88,8 +85,17 @@ presImg.style.width = "100%";
 
 const mainBox = document.querySelector('main');
 mainBox.style.margin = "0 auto";
-// mainBox.style.width = "1250px";
-mainBox.style.width = "1240px";
+mainBox.style.width = "950px";
+
+// div interne de l'article d'introduction
+nouvelleDiv.style.width = "410px";
+
+const headEr = document.querySelector("header");
+headEr.style.width = "1140px";
+headEr.style.margin = "50px auto";
+
+const imgHeader = document.querySelector("header img");
+imgHeader.style.width = "20px";
 
 
 
@@ -108,39 +114,6 @@ justify-content: center;
 `;
 let currentDiv = document.querySelector("#portfolio");
 currentDiv.appendChild(newForm);
-
-
-
-// Fonction pour la création des boutons (input:submit) de catégories
-function newBouton(btnName, categorieId, categorieOnClick) {
-    let newBtn = document.createElement("input");
-    newBtn.setAttribute("type", "submit");
-    newBtn.setAttribute("value", btnName);
-    newBtn.setAttribute("data-categorie-id", categorieId);
-    newBtn.style.cssText = `
-    padding: 0px 10px 0px 10px;
-    width: auto;
-    min-width: 100px;
-    height: 37px;
-    margin: 20px 5px 20px 5px;
-    border: solid 1px #1D6154;
-    background: #FFFEF8;
-    color: #1D6154;
-    font-size: 16px;
-    font-weight: 700;
-    `;
-    newBtn.addEventListener('click', categorieOnClick);
-    let currentForm = document.querySelector("#formBtn");
-    currentForm.appendChild(newBtn);
-    newBtn.addEventListener('mouseover', function(e) {
-        e.target.style.backgroundColor = "#1D6154";
-        e.target.style.color = "white";
-    });
-    newBtn.addEventListener('mouseout', function(e) {
-        e.target.style.backgroundColor = "#FFFEF8";
-        e.target.style.color = "#1D6154";
-    });
-};
 
 
 
@@ -163,20 +136,11 @@ newGalerie.classList.add("gallery");
 newGalerie.style.marginTop = "20px";
 
 
-// Le bouton Tous
-newBouton('Tous', '', categorieOnClick);
 
 
 
-// Filtre des projets par catégorie
-function categorieOnClick(e) {
-    e.preventDefault();
-    let categorieDataId = e.target.getAttribute("data-categorie-id");
-    // console.log(e.target);
-    console.log(categorieDataId);
-    loadGallery(categorieDataId);
-    // works
-};
+
+
 
 
 

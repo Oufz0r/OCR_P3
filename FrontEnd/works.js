@@ -49,3 +49,52 @@ function loadGallery(categorieId) {
 };
 
 
+
+// Le bouton Tous
+newBouton('Tous', '', categorieOnClick);
+
+
+
+// Fonction pour la création des boutons (input:submit) de catégories
+function newBouton(btnName, categorieId, categorieOnClick) {
+    let newBtn = document.createElement("input");
+    newBtn.setAttribute("type", "submit");
+    newBtn.setAttribute("value", btnName);
+    newBtn.setAttribute("data-categorie-id", categorieId);
+    newBtn.style.cssText = `
+    padding: 0px 10px 0px 10px;
+    width: auto;
+    min-width: 100px;
+    height: 37px;
+    margin: 20px 5px 20px 5px;
+    border: solid 1px #1D6154;
+    background: #FFFEF8;
+    color: #1D6154;
+    font-size: 16px;
+    font-weight: 700;
+    `;
+    newBtn.addEventListener('click', categorieOnClick);
+    let currentForm = document.querySelector("#formBtn");
+    currentForm.appendChild(newBtn);
+    newBtn.addEventListener('mouseover', function(e) {
+        e.target.style.backgroundColor = "#1D6154";
+        e.target.style.color = "white";
+    });
+    newBtn.addEventListener('mouseout', function(e) {
+        e.target.style.backgroundColor = "#FFFEF8";
+        e.target.style.color = "#1D6154";
+    });
+};
+
+
+
+
+// Filtre des projets par catégorie
+function categorieOnClick(e) {
+    e.preventDefault();
+    let categorieDataId = e.target.getAttribute("data-categorie-id");
+    // console.log(e.target);
+    console.log(categorieDataId);
+    loadGallery(categorieDataId);
+    // works
+};

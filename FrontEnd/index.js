@@ -178,6 +178,8 @@ userSessionId && userSessionToken ? editorMode() : "";
 
 
 
+
+
 function openModal() {
     modalBox.style.display = 'flex';
 };
@@ -186,6 +188,9 @@ function openModal() {
 function closeModal() {
     modalBox.style.display = 'none';
 };
+
+
+
 
 
 
@@ -220,7 +225,7 @@ function editorMode() {
     margin: 0px 0px 0px 20px;`;
     htmlBox.insertBefore(divEditorBig, bodyBox);
 
-    // Petits liens d'édition
+    // Petit lien d'édition
     let divEditorSmall1 = document.createElement("div");
     divEditorSmall1.style.cssText = `
     max-width: 100px;
@@ -229,7 +234,7 @@ function editorMode() {
     font-weight: 400;
     margin: 15px 0px 15px 0;`;
     divEditorSmall1.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
-    // insertion des liens
+    // insertion du lien
     introArticle.insertBefore(divEditorSmall1, introArticle.children[0]);
 
     
@@ -241,7 +246,7 @@ function editorMode() {
     font-weight: 400;
     margin: -40px 0 0 0;`;
     divEditorSmall2.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
-    // insertion des liens
+    // insertion du lien
     let presLeft = document.querySelector("#introduction figure");
     mainBox.insertBefore(divEditorSmall2, mainBox.children[1]);
 
@@ -258,9 +263,12 @@ function editorMode() {
     font-size: 15px;
     font-weight: 400;`;
     divEditorSmall3.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
-    // insertion des liens
+    // insertion du lien
     portfolioBox.insertBefore(divEditorSmall3, portfolioBox.children[0]);
 
+    // suppression des boutons de catégorie et ajout de marge
+    document.querySelector("#formBtn").style.display = "none";
+    document.querySelector("#portfolio h2").style.marginBottom = '80px';
 
     // login to logout
     stylizeLi = document.querySelectorAll("nav ul li");
@@ -316,23 +324,3 @@ height: 60px;
 font-size: 14px;
 font-weight: 300;
 line-height: 60px;`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

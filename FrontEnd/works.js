@@ -60,6 +60,7 @@ function newBouton(btnName, categorieId, categorieOnClick) {
     let newBtn = document.createElement("input");
     newBtn.setAttribute("type", "submit");
     newBtn.setAttribute("value", btnName);
+    newBtn.setAttribute("class", "removeAtEdit");
     newBtn.setAttribute("data-categorie-id", categorieId);
     newBtn.style.cssText = `
     padding: 0px 10px 0px 10px;

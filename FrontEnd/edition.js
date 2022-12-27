@@ -120,6 +120,8 @@ const modalBox = document.createElement("div");
 // mainBox.appendChild(modalBox);
 htmlBox.insertBefore(modalBox, bodyBox);
 modalBox.setAttribute("id", "modalBox");
+modalBox.setAttribute("role", "modal");
+modalBox.setAttribute("aria-modal", "true");
 modalBox.addEventListener('click', function(){
     closeModal();
 });
@@ -128,6 +130,7 @@ modalBox.style.cssText = `
 position: fixed;
 display: none;
 justify-content: center;
+align-items: center;
 top: 0;
 left: 0;
 color: red;
@@ -135,6 +138,9 @@ background: rgba(0, 0, 0, 0.3);
 width: 100%;
 height: 100%;
 z-index: 1;`; // display none
+
+
+
 
 // Création de la modal
 const modal = document.createElement("div");
@@ -151,13 +157,13 @@ modal.style.cssText = `
     background: white;
     width: 630px;
     height: 731px;
-    margin: 150px auto;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 `; // none
+
 
 // contenu de la modal
 const modalCross = document.createElement("span");
@@ -187,11 +193,12 @@ color: black;
 `;
 // modal Titre h2
 modalTitre.innerHTML += "Galerie photo";
-// affichage de la galerie
+// affichage de la galerie (overflow?)
 modalGalerie.style.cssText = `
 display: flex;
 flex-flow: row wrap;
 margin: 30px 90px;
+overflow: auto;
 `;
 loadGalleryMini();
 // bar HR de séparation
@@ -233,8 +240,3 @@ modalAdd.style.cssText = `
 `;
 // text supprimer la galerie
 modalAddDel.innerHTML += "Supprimer la galerie";
-
-
-
-
-

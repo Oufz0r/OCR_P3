@@ -30,6 +30,8 @@ const inputTxt = document.querySelectorAll("input");
 inputTxt[0].style.width = "379px";
 inputTxt[1].style.width = "379px";
 
+
+
 const inputSubmit = document.querySelector("input[type='submit']");
 inputSubmit.style.width = "179px";
 inputSubmit.style.height = "36px";
@@ -50,33 +52,52 @@ left: 0;`;
 
 
 
+let inputEmail = document.querySelector('#email');
+let inputPassword = document.querySelector('#password');
+
+let msgLogDiv = document.querySelector('#msgdiv');
+msgLogDiv.style.marginTop = "20px";
+msgLogDiv.style.color = "darkred";
+
+let msgLog = "";
 
 
+
+
+// mise en storage du token
+function storeTkn(id, token) {
+    sessionStorage.setItem("id", id);
+    sessionStorage.setItem("token", token);
+    // alert(id+"/"+token);
+    window.location.href = "index.html";
+};
 
 
 
 
 function logIn(email,password) {
     fetch("http://localhost:5678/api/users/login", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json', 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-            {
-                email: email,
-                password: password
-            }
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+        {
+            email: email,
+            password: password
+        }
         )
     })
     .then(function(res) {
         return res.json();
     })
     .then(function(value){
-        console.log(value);
+        let userId = value.id;
+        let userToken = value.token;
+        userId !== null && userToken != null ? storeTkn(userId, userToken) : msgLog = "Erreur dans l’identifiant ou le mot de passe";
+        msgLogDiv.innerHTML += msgLog;
         // vérification
-        // localStorage
     })
     .catch(function(err) {
         // message d'erreur
@@ -90,11 +111,20 @@ function logIn(email,password) {
 const loginBtn = document.querySelector('input[type="submit"]');
 loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    msgLogDiv.innerHTML = "";
     let userEmail = document.querySelector('#email').value;
     let userPassword = document.querySelector('#password').value;
-    console.log(userEmail+"/"+userPassword);
+    // console.log(userEmail+"/"+userPassword);
     logIn(userEmail,userPassword);
 });
 
 
 
+// Au click dans un des deux input de login on clean la div de message d'erreur
+inputEmail.addEventListener('click', () => {
+    msgLogDiv.innerHTML = '';
+});
+
+inputPassword.addEventListener('click', () => {
+    msgLogDiv.innerHTML = '';
+});

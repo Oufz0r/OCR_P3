@@ -187,6 +187,9 @@ function openModal() {
 
 function closeModal() {
     modalBox.style.display = 'none';
+    modalPage1.style.display = 'flex';
+    modalPage2.style.display = 'none';
+    modalArrow.style.display = 'none';
 };
 
 

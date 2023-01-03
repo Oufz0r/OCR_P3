@@ -3,77 +3,90 @@ function newFigureMini(imgId, imgUrl, imgTitle) {
     let newFig = document.createElement("figure");
         modalGalerie.appendChild(newFig);
         newFig.setAttribute("class", "projets");
-        newFig.style.cssText = `
-        margin: 5px;
-        position: relative;`;
+        newFig.setAttribute("data-id", imgId);
+
     let newImg = document.createElement("img");
         newImg.crossOrigin = "anonymous";
         newImg.style.width = '80px';
         newFig.appendChild(newImg);
+
     let TrashIcon = document.createElement("span");
         newFig.appendChild(TrashIcon);
         TrashIcon.setAttribute("data-del-id", imgId);
-        TrashIcon.innerHTML = '<i class="fa-solid fa-trash-can" data-del-id='+imgId+'></i>';
-        TrashIcon.style.cssText = `
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        width: 17px;
-        height: 17px;
-        color: white;
-        font-size: 10px;
-        background: black;
-        line-height: 17px;
-        border-radius: 3px;
-    `;
+        TrashIcon.setAttribute("class", 'trash');
+    
+// ajout de l'icon à l'intérieur de la TrashBox (span)
+    let trashContent = document.createElement('i');
+        TrashIcon.appendChild(trashContent);
+        trashContent.setAttribute('class', 'fa-solid fa-trash-can');
+        trashContent.setAttribute('data-del-id', imgId);
+
     let newFigCap = document.createElement("figcaption");
+        newFigCap.setAttribute("data-id", imgId);
+        newFigCap.setAttribute("class", "editSpan");
+    let newFigCapSpan = document.createElement("span");
+        newFigCapSpan.textContent += "éditer";
         newFig.appendChild(newFigCap);
+        newFigCap.appendChild(newFigCapSpan);
 
     // Application du src et alt
     newImg.setAttribute("src", imgUrl);
     newImg.setAttribute("alt", imgTitle);
 
-    newFigCap.innerHTML += "<span>éditer</span>";
-    newFigCap.style.cssText = `
-    font-size: 13px;
-    font-weight: 400;
-    text-align: left;
-    margin-top: -3px;
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-`;
 
-
+// Suppression du projet
 function deleteImg(e) {
     let id = e.target.getAttribute("data-del-id");
+    const nbToDel = document.querySelectorAll("[data-id='"+imgId+"']").length;
+    for(n = 0; n < nbToDel; n++)
+    {
+        document.querySelector("[data-id='"+imgId+"']").remove();
+    }
+
+    let userToken = sessionStorage.getItem('token');
+
+    // fetch("http://localhost:5678/api/works/"+id, {
+    //     method: 'DELETE',
+    //     headers: {
+    //         'Accept': 'application/json', 
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${userToken}`
+    //     },
+    //     body: JSON.stringify({
+    //         id: id
+    //     })
+    //     })
+    //     .then(function(){
+    //         // rien à ajouter
+            
+    //     })
+    //     .catch(function(err) {
+    //         // message d'erreur
+    //         console.log(err);
+    //     })
 };
+
 
 TrashIcon.addEventListener('click', deleteImg);
+// TrashIcon.parentElement.addEventListener('click', deleteImg);
+
+let moveIcon = document.createElement("span");
+        newFig.appendChild(moveIcon);
+let moveIconContent = document.createElement("i");
+    moveIconContent.setAttribute('class', 'fa-solid fa-arrows-up-down-left-right');
+    moveIcon.appendChild(moveIconContent);
+    moveIcon.setAttribute('class', 'dragCross');
 
 
-moveIcon = document.createElement("span");
-        let projetsAll = document.getElementsByClassName("projets");
-        let firstFigure = projetsAll[0];
-        firstFigure.appendChild(moveIcon);
-            // moveIcon.setAttribute("data-move-id", imgId);
-            moveIcon.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right" data-move-id='+imgId+'></i>';
-            moveIcon.style.cssText = `
-            position: absolute;
-            right: 25px;
-            top: 5px;
-            width: 17px;
-            height: 17px;
-            color: white;
-            font-size: 12px;
-            background: black;
-            line-height: 18px;
-            border-radius: 3px;
-            `;
-            
-
+newFig.addEventListener('mouseover', (e) => {
+    e.target.parentElement.querySelector(".dragCross").style.display = "inline";
+});
+newFig.addEventListener('mouseout', (e) => {
+    e.target.parentElement.querySelector(".dragCross").style.display = "none";
+});
 };
+
+
 
 
 
@@ -110,131 +123,88 @@ function loadGalleryMini() {
 
 
 
-
-
-
-
-
-// Création de la div contenant la modal
-const modalBox = document.createElement("div");
-// mainBox.appendChild(modalBox);
-htmlBox.insertBefore(modalBox, bodyBox);
-modalBox.setAttribute("id", "modalBox");
-modalBox.setAttribute("role", "modal");
-modalBox.setAttribute("aria-modal", "true");
-modalBox.addEventListener('click', function(){
-    closeModal();
-});
-// display none de base, flex pour voir
-modalBox.style.cssText = `
-position: fixed;
-display: none;
-justify-content: center;
-padding-top: 150px;
-top: 0;
-left: 0;
-color: red;
-background: rgba(0, 0, 0, 0.3);
-width: 100%;
-height: 100%;
-z-index: 1;`; // display none /
-
-
-
-
-
-
-
-
-
-
 // Création de la modal
-let modal = document.createElement("div");
-modalBox.appendChild(modal);
-modal.setAttribute("id", "modal");
-modal.addEventListener('click', function(e){
-    e.stopPropagation();
-});
-modal.style.cssText = `
-    position: fixed;
-    z-index: 1;
-    border-radius: 10px;
-    color: black;
-    background: white;
-    width: 630px;
-    // height: 731px;
-    height: auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0px 50px 0px;
-`; // none
-
-
+// function
+// function createModal(titre) {
+    
+    // Création de la div contenant la modal
+    const modalBox = document.createElement("div");
+    htmlBox.insertBefore(modalBox, bodyBox);
+    modalBox.setAttribute("id", "modalBox");
+    modalBox.addEventListener('click', function(){
+        closeModal();
+    });
+    let modal = document.createElement("div");
+    modalBox.appendChild(modal);
+    modal.setAttribute("id", "modal");
+    modal.setAttribute("role", "modal");
+    modal.setAttribute("aria-modal", "true");
+    modal.addEventListener('click', function(e){
+        e.stopPropagation();
+    });
+    
+    let modalCross = document.createElement("span");
+    // modal Cross close
+    modal.appendChild(modalCross);
+    let modalCrossContent = document.createElement('i');
+    modalCrossContent.setAttribute('class', 'fa-solid fa-xmark');
+    modalCross.appendChild(modalCrossContent);
+    modalCross.addEventListener('click', closeModal);
+    modalCross.setAttribute('class', 'modalCross');
+    
+    // titre
+    let modalTitre = document.createElement("h2");
+    modal.appendChild(modalTitre);
+    // modalTitre.textContent = titre;
+    modalTitre.textContent = 'Galerie photo';
+    
+    // modalPage1b();
+// }
+// end function
 
 
 
 
 // ========= Création de la modal page 1 =========
+// function modalPage1b() {
+    // const modal = document.querySelector("#modal");
 let modalPage1 = document.createElement("div");
-modalPage1.style.cssText = `
-display: flex;
-flex-direction: column;
-justify-content: flex-start;`;
-let modalCross = document.createElement("span");
-let modalTitre = document.createElement("h2");
+    modalPage1.setAttribute('class', 'modalPage');
+// let modalTitre = document.createElement("h2");
 let modalGalerie = document.createElement("div");
 let modalBar = document.createElement("hr");
 let modalAddDel = document.createElement("div");
 let modalAdd = document.createElement("input");
-modalPage1.setAttribute("id", "page1");
-modalAdd.setAttribute("type", "submit");
-modalAdd.setAttribute("value", "Ajouter une photo");
-modal.appendChild(modalPage1);
-modal.appendChild(modalCross);
-modalPage1.appendChild(modalTitre);
-modalPage1.appendChild(modalGalerie);
-modalPage1.appendChild(modalBar);
-modalPage1.appendChild(modalAddDel);
-modalAddDel.appendChild(modalAdd);
-// modal Cross close
-modalCross.innerHTML += '<i class="fa-solid fa-xmark"></i>';
-modalCross.addEventListener('click', closeModal);
-modalCross.style.cssText = `
-position: absolute;
-width: 15px;
-height: 15px;
-top: 35px;
-right: 35px;
-color: black;
-`;
+    modalPage1.setAttribute("id", "page1");
+    modalAdd.setAttribute("type", "submit");
+    modalAdd.setAttribute("value", "Ajouter une photo");
+    modal.appendChild(modalPage1);
+    modalPage1.append(modalGalerie, modalBar, modalAddDel);
+    modalAddDel.appendChild(modalAdd);
+
 // création de la flèche retour
 let modalArrow = document.createElement("span");
-modalArrow.innerHTML += '<i class="fa-solid fa-arrow-left"></i>';
-modal.appendChild(modalArrow);
-modalArrow.style.cssText = `
-display: none;
-position: absolute;
-width: 15px;
-height: 15px;
-top: 35px;
-left: 35px;
-color: black;
-`;
+    modalArrow.setAttribute('class', 'modalArrow')
+let modalArrowContent = document.createElement('i');
+    modalArrowContent.setAttribute('class', 'fa-solid fa-arrow-left');
+    modalArrow.appendChild(modalArrowContent);
+    modal.appendChild(modalArrow);
+
 // modal Titre h2
-modalTitre.innerHTML += "Galerie photo";
+    // modalTitre.textContent = "Galerie photo";
+
 // affichage de la galerie (overflow?)
-modalGalerie.style.cssText = `
-display: flex;
-flex-flow: row wrap;
-margin: 0px 90px 30px 90px;
-overflow: auto;
-`;
+    modalGalerie.style.cssText = `
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0px 90px 30px 90px;
+    overflow: auto;
+    `;
+
 loadGalleryMini();
+
 // bar HR de séparation
-modalBar.style.cssText = `
+    modalBar.style.cssText = `
     width: 420px;
     background: #B3B3B3;
     height: 1px;
@@ -267,8 +237,7 @@ modalAdd.style.cssText = `
 `;
 // text supprimer la galerie
 modalAddDel.innerHTML += "<p>Supprimer la galerie</p>";
-
-
+// } // end modalPage1
 
 
 
@@ -279,6 +248,7 @@ modalAddDel.innerHTML += "<p>Supprimer la galerie</p>";
 
 
 //========= Création de la modal page 2 =========
+// function modalPage2() {
 let modalPage2 = document.createElement("div");
 modalPage2.setAttribute("id", "page2");
 modalPage2.style.display = "none";
@@ -287,16 +257,16 @@ modalPage2.style.cssText = `
 display: none;
 flex-direction: column;`;
 // création du titre
-modalTitre = document.createElement("h2");
-modalTitre.innerHTML += "Ajout photo";
-modalTitre.style.cssText = `
-    font-size: 26px;
-    font-weight: 400;
-    font-family: 'Work Sans';
-    color: black;
-    margin-bottom: 30px;
-`;
-modalPage2.appendChild(modalTitre);
+// modalTitre = document.createElement("h2");
+// modalTitre.innerHTML += "Ajout photo";
+// modalTitre.style.cssText = `
+//     font-size: 26px;
+//     font-weight: 400;
+//     font-family: 'Work Sans';
+//     color: black;
+//     margin-bottom: 30px;
+// `;
+// modalPage2.appendChild(modalTitre);
 // création du formulaire
 let formulaire = document.createElement("form");
 modalPage2.appendChild(formulaire);
@@ -480,7 +450,7 @@ fetch("http://localhost:5678/api/categories")
 .catch(function(err) {
     console.log(err);
 });
-
+// } // end modalPage1
 
 
 
@@ -553,6 +523,7 @@ modalAddDel.firstChild.addEventListener('click', () => {
     modalPage1.style.display = "none";
     modalPage2.style.display = "flex";
     modalArrow.style.display = "flex";
+    modalTitre.textContent = 'Ajout photo';
 });
 
 // Retour à la modal Galerie
@@ -560,5 +531,38 @@ modalArrow.addEventListener('click', () => {
     modalPage1.style.display = "flex";
     modalPage2.style.display = "none";
     modalArrow.style.display = "none";
+    modalTitre.textContent = 'Galerie photo';
 });
 
+
+
+
+
+// Ajout d'un projet
+function addNewProject(title, imageUrl, categoryId) {
+let userToken = sessionStorage.getItem('token');
+
+    fetch("http://localhost:5678/api/works", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: JSON.stringify({
+            id: id,
+            title: title,
+            imageUrl: imageUrl,
+            categoryId: categorieId,
+            userId: 1
+        })
+        })
+        .then(function(){
+            // rien à ajouter
+            
+        })
+        .catch(function(err) {
+            // message d'erreur
+            console.log(err);
+        })
+}

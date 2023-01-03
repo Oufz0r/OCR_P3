@@ -182,6 +182,8 @@ userSessionId && userSessionToken ? editorMode() : "";
 
 function openModal() {
     modalBox.style.display = 'flex';
+    // createModal("Galerie photo");
+    modalTitre.textContent = 'Galerie photo';
 };
 
 
@@ -190,6 +192,7 @@ function closeModal() {
     modalPage1.style.display = 'flex';
     modalPage2.style.display = 'none';
     modalArrow.style.display = 'none';
+    // document.querySelector("#modalBox").remove();
 };
 
 

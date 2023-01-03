@@ -39,14 +39,7 @@ inputSubmit.style.fontSize = "14px";
 inputSubmit.style.fontWeight = "700";
 
 let footerWork = document.querySelector("footer");
-footerWork.style.cssText = `
-position: absolute;
-background-color: white;
-height: 60px;
-width: 100%;
-bottom: 0;
-left: 0;`;
-
+footerWork.setAttribute('class', 'foot-rework');
 
 
 

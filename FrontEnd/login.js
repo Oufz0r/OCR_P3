@@ -52,8 +52,6 @@ let msgLogDiv = document.querySelector('#msgdiv');
 msgLogDiv.style.marginTop = "20px";
 msgLogDiv.style.color = "darkred";
 
-let msgLog = "";
-
 
 
 
@@ -86,6 +84,7 @@ function logIn(email,password) {
         return res.json();
     })
     .then(function(value){
+        let msgLog = "";
         let userId = value.id;
         let userToken = value.token;
         userId !== null && userToken != null ? storeTkn(userId, userToken) : msgLog = "Erreur dans l’identifiant ou le mot de passe";

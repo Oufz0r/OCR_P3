@@ -32,7 +32,7 @@ const newTitreBox = document.querySelector("header h1");
 newSpan = document.createElement("span");
 newTitreBox.appendChild(newSpan);
 const newTitre = document.querySelector("header h1 span");
-newSpan.innerHTML += "ARCHITECTE D'INTÉRIEUR";
+newSpan.textContent += "ARCHITECTE D'INTÉRIEUR";
 newSpan.style.margin = "5px 0 0 0";
 newSpan.style.fontSize = "10px";
 newSpan.style.fontWeight = "400";
@@ -65,11 +65,12 @@ introRight.appendChild(nouvelleDiv);
 // nouveau titre h2
 newH2 = document.createElement("h2");
 nouvelleDiv.appendChild(newH2);
-newH2.innerHTML += "Designer d'espace";
+newH2.textContent += "Designer d'espace";
 
 // Nouveaux paragraphes
 function newPar() {
     newParagraphe = document.createElement("p");
+    newParagraphe.style.marginBottom = '15px';
     nouvelleDiv.appendChild(newParagraphe);
 };
 
@@ -82,9 +83,9 @@ newPar();
 const introArticle = document.querySelector("#introduction article");
 introArticle.style.color = "#3D3D3D";
 const newText = document.querySelectorAll("#introduction article p");
-newText[0].innerHTML += "Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.";
-newText[1].innerHTML += "Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux, et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.";
-newText[2].innerHTML += "En cas de besoin, une équipe pluridisciplinaire constituée de : architecte DPLG, décorateur(trice).";
+newText[0].textContent += "Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.";
+newText[1].textContent += "Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux, et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.";
+newText[2].textContent += "En cas de besoin, une équipe pluridisciplinaire constituée de : architecte DPLG, décorateur(trice).";
 
 
 
@@ -181,18 +182,19 @@ userSessionId && userSessionToken ? editorMode() : "";
 
 
 function openModal() {
-    modalBox.style.display = 'flex';
-    // createModal("Galerie photo");
-    modalTitre.textContent = 'Galerie photo';
+    // modalBox.style.display = 'flex';
+    createModal('Galerie photo', modalPage1());
+    // document.querySelector("#modal").appendChild(modalPage1())
+    // modalTitre.textContent = 'Galerie photo';
 };
 
 
 function closeModal() {
-    modalBox.style.display = 'none';
-    modalPage1.style.display = 'flex';
-    modalPage2.style.display = 'none';
-    modalArrow.style.display = 'none';
-    // document.querySelector("#modalBox").remove();
+    // modalBox.style.display = 'none';
+    // modalPage1.style.display = 'flex';
+    // modalPage2.style.display = 'none';
+    // modalArrow.style.display = 'none';
+    document.querySelector("#modalBox").remove();
 };
 
 
@@ -206,84 +208,47 @@ function closeModal() {
 function editorMode() {
     // Bandeau d'édition
     let divEditorBig = document.createElement("div");
-    divEditorBig.style.cssText = `
-    font-family: Work Sans;
-    z-index: 2;
-    background: black;
-    width: 100%;
-    color: white;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 10px 0px 10px 0px;
-    text-align: center;`;
-    divEditorBig.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> Mode édition
-    <input type="submit" value="publier les changements">`;
+        divEditorBig.setAttribute('class', 'editorBig');
+
+        divEditorBig.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> Mode édition
+        <input type="submit" value="publier les changements">`;
     let editBtn = divEditorBig.querySelector("input[type='submit']");
-    editBtn.style.cssText = `
-    font-family: Work Sans;
-    font-size: 14px;
-    font-weight: 600;
-    background: white;
-    color: black;
-    width: auto;
-    border: none;
-    padding: 11px 23px 11px 23px;
-    margin: 0px 0px 0px 20px;`;
-    htmlBox.insertBefore(divEditorBig, bodyBox);
+        htmlBox.insertBefore(divEditorBig, bodyBox);
 
     // Petit lien d'édition
     let divEditorSmall1 = document.createElement("div");
-    divEditorSmall1.style.cssText = `
-    max-width: 100px;
-    color: black;
-    font-size: 15px;
-    font-weight: 400;
-    margin: 15px 0px 15px 0;`;
-    divEditorSmall1.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
-    // insertion du lien
-    introArticle.insertBefore(divEditorSmall1, introArticle.children[0]);
+        divEditorSmall1.setAttribute('class', 'editDiv editDiv1');
+        divEditorSmall1.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        // insertion du lien
+        introArticle.insertBefore(divEditorSmall1, introArticle.children[0]);
 
     
     let divEditorSmall2 = document.createElement("div");
-    divEditorSmall2.style.cssText = `
-    color: black;
-    max-width: 100px;
-    font-size: 15px;
-    font-weight: 400;
-    margin: -40px 0 0 0;`;
-    divEditorSmall2.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        divEditorSmall2.setAttribute('class', 'editDiv editDiv2');
+        divEditorSmall2.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
     // insertion du lien
     let presLeft = document.querySelector("#introduction figure");
-    mainBox.insertBefore(divEditorSmall2, mainBox.children[1]);
+        mainBox.insertBefore(divEditorSmall2, mainBox.children[1]);
 
 
     let divEditorSmall3 = document.createElement("div");
-    divEditorSmall3.addEventListener('click', openModal);
-    divEditorSmall3.style.cssText = `
-    position: relative;
-    bottom: -25px;
-    left: 180px;
-    margin: 0 auto;
-    width: 100px;
-    color: black;
-    font-size: 15px;
-    font-weight: 400;`;
-    divEditorSmall3.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        divEditorSmall3.setAttribute('class', 'editDiv editDiv3');
+        divEditorSmall3.addEventListener('click', openModal);
+        divEditorSmall3.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
     // insertion du lien
-    portfolioBox.insertBefore(divEditorSmall3, portfolioBox.children[0]);
+        portfolioBox.insertBefore(divEditorSmall3, portfolioBox.children[0]);
 
     // suppression des boutons de catégorie et ajout de marge
-    document.querySelector("#formBtn").style.display = "none";
-    document.querySelector("#portfolio h2").style.marginBottom = '80px';
+        document.querySelector("#formBtn").style.display = "none";
+        document.querySelector("#portfolio h2").style.marginBottom = '80px';
 
     // login to logout
-    stylizeLi = document.querySelectorAll("nav ul li");
-    stylizeLi[2].remove();
+        stylizeLi = document.querySelectorAll("nav ul li");
+        stylizeLi[2].remove();
     let logoutLink = document.createElement("li");
     let ulBox = document.querySelector("nav ul");
-    ulBox.insertBefore(logoutLink, ulBox.children[2]);
-    logoutLink.innerHTML += "logout";
-
+        ulBox.insertBefore(logoutLink, ulBox.children[2]);
+        logoutLink.textContent = "logout";
 };
 
 
@@ -315,18 +280,6 @@ stylizeLi = document.querySelectorAll("nav ul li");
 // en fonction de l'état connecté ou non connecté
 userSessionId && userSessionToken ? stylizeLi[2].addEventListener("click", linkLogout) : stylizeLi[2].addEventListener("click", linkLogin);
 
-// stylizeLi[2].addEventListener("click", linkLogin);
-
-
-// stylizeLi[2].addEventListener("click", () => {
-//     window.location.href = "login.html";
-// });
-
 
 let footerWork = document.querySelector("footer");
-footerWork.style.cssText = `
-background-color: white;
-height: 60px;
-font-size: 14px;
-font-weight: 300;
-line-height: 60px;`;
+    footerWork.setAttribute('class', 'footrework');

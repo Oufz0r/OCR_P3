@@ -1,7 +1,5 @@
 window.onload = function(){
     loadGallery();
-    // document.cookie = "cookieName=cookieValue; max-age=2000; path=/;";
-    // document.cookie = "cookieName=cookieValue; expires=20000;"
     }
 
 

@@ -35,36 +35,41 @@ function newFigureMini(imgId, imgUrl, imgTitle) {
     newImg.setAttribute("alt", imgTitle);
 
 
+
+
+
 // Suppression du projet
 function deleteImg(e) {
     let id = e.target.getAttribute("data-del-id");
-    const nbToDel = document.querySelectorAll("[data-id='"+imgId+"']").length;
-    for(n = 0; n < nbToDel; n++)
-    {
-        document.querySelector("[data-id='"+imgId+"']").remove();
-    }
 
     let userToken = sessionStorage.getItem('token');
 
-    // fetch("http://localhost:5678/api/works/"+id, {
-    //     method: 'DELETE',
-    //     headers: {
-    //         'Accept': 'application/json', 
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${userToken}`
-    //     },
-    //     body: JSON.stringify({
-    //         id: id
-    //     })
-    //     })
-    //     .then(function(){
-    //         // rien à ajouter
+    fetch("http://localhost:5678/api/works/"+id, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: JSON.stringify({
+            id: id
+        })
+        })
+        .then(function(){
+            // rien à ajouter
             
-    //     })
-    //     .catch(function(err) {
-    //         // message d'erreur
-    //         console.log(err);
-    //     })
+        })
+        .catch(function(err) {
+            // message d'erreur
+            console.log(err);
+        })
+
+        const nbToDel = document.querySelectorAll("[data-del-id='"+imgId+"']").length;
+    for(n = 0; n < nbToDel; n++)
+    {
+        document.querySelector("[data-id='"+imgId+"']").remove();
+        // console.log(nbToDel);
+    }
 };
 
 
@@ -206,6 +211,8 @@ return page1;
 
 
 
+
+
 //========= Création de la modal page 2 =========
 function modalPage2() {
 let page2 = document.createElement("div");
@@ -318,14 +325,24 @@ fetch("http://localhost:5678/api/categories")
         let cateId = value[n].id;
         newOption = document.createElement("option");
         selectCategorie.appendChild(newOption);
-        newOption.innerHTML += cateName;
+        newOption.textContent += cateName;
         newOption.setAttribute("value", cateName);
+        newOption.setAttribute("name", cateName);
+        newOption.setAttribute("class", 'option'+cateId);
         newOption.setAttribute("data-id-cat", cateId);
     }
 })
 .catch(function(err) {
     console.log(err);
 });
+
+
+// On crée la div msgErrorUpload au dessus du bouton Valider à l'intérieur du form
+msgRefuse = document.createElement('div');
+msgRefuse.setAttribute('class', 'msgErrorUpload');
+formulaire.insertBefore(msgRefuse, modalValide);
+
+
 
 // création de la flèche retour
 let modalArrow = document.createElement("span");
@@ -344,6 +361,10 @@ modalArrow.addEventListener('click', () => {
 
 return page2;
 } // end modalPage1
+
+
+
+
 
 
 
@@ -377,9 +398,11 @@ function showImg(url) {
 
 // on fait réapparaitre le contenu information de l'input file
 function imgRemove() {
-    document.getElementById("imageToUpload").remove();
+    // si une preview est déjà présente on la retire
+    document.getElementById("imageToUpload") ? document.getElementById("imageToUpload").remove() : "";
+    // On réaffiche les infos de l'input file (format et taille autorisée)
     document.getElementById("labelImg").style.display = 'inline';
-    document.getElementById("labelBtn").style.display = 'inline';
+    document.getElementById("labelBtn").style.display = 'flex';
     document.getElementById("labelMax").style.display = 'inline';
 }
 
@@ -418,38 +441,26 @@ function buttonGrey() {
 
 
 
-
 // Ajout d'un projet
 function addNewProject() {
-    let userToken = sessionStorage.getItem('token');
-
         checkImg = document.getElementById("img-file").value;
         checkTitre = document.getElementById("titre").value;
         checkCategorie = document.getElementById("categorie").value;
+        // rechercher l'element <option> avec la class checkCategorieName
+        checkCategorie ? (checkCategorieId = document.querySelector('[name="'+checkCategorie+'"]').getAttribute('data-id-cat')) : "";
 
-        checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectApply(checkTitre, checkImg, checkCategorie) : formError('Il manque quelque chose à votre formulaire.');
-        
-
-        // Fonction pour clean la div msgErrorUpload
-        function clearMsgRefuse() {
-            msgRefuse.textContent = '';
-        }
+        checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectApply(checkTitre, checkImg, checkCategorieId) : formError('Il manque quelque chose à votre formulaire.');
 
         // On efface le message au bout de 3 secondes
-        setTimeout(clearMsgRefuse, 3000);
-        
+        setTimeout(() => {msgRefuse.textContent = ''}, 3000);
 }
+
+
 
 
 // Fonction pour afficher une erreur dans le formulaire
 function formError(msg) {
-    // On affiche un message d'erreur
-    formulaire = document.querySelector("#formulaire");
-    test = document.querySelector("#buttonUpload");
-    msgRefuse = document.createElement('div');
-    msgRefuse.setAttribute('id', 'msgErrorUpload');
     msgRefuse.textContent = msg;
-    formulaire.insertBefore(msgRefuse, test);
 }
 
 
@@ -458,40 +469,62 @@ function formError(msg) {
 
 
 
+// Controle de l'extension et du poids de l'image
 function addNewProjectApply(title, imageUrl, categoryId) {
     let userToken = sessionStorage.getItem('token');
 
-    // On récupère l'image choisie
-    let imageFile = document.getElementById('img-file').files[0];    
+    let validation = 'oui';
 
-                // application dans l'api
-                // fetch("http://localhost:5678/api/works", {
-                //     method: 'POST',
-                //     headers: {
-                //         'Accept': 'application/json', 
-                //         'Content-Type': 'application/json',
-                //         'Authorization': `Bearer ${userToken}`
-                //     },
-                //     body: JSON.stringify({
-                //         title: title,
-                //         image: imageFile,
-                //         category: categoryId
-                //     })
-                //     })
-                //     .then(function(value){
-                //         // rien à ajouter
-                //     })
-                //     .catch(function(err) {
-                //         // message d'erreur
-                //         console.log(err);
-                //     })
-                //     alert('Envoyé!');
+    // On récupère l'image choisie
+    let imageFile = document.getElementById('img-file').files[0];
 
         // On vérifie l'extension de l'image
-                imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? formError('Formulaire Valide') : formError("Le format de votre image n'est pas valide.");
-        // On vérifie le poids de l'image
-                imageFile.size <= 4000000 ? "" : formError("L'image dépasse la taille maximum autorisée.");
+                imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? formError('Formulaire Valide') : (
+                    formError("Le format de votre image n'est pas valide."),
+                    validation = 'non'
+                )
+        // On vérifie le poids de l'image <= 4Mo
+                imageFile.size <= 1024*4000 ? "" : (
+                    formError("L'image dépasse la taille maximum autorisée."),
+                    validation = 'non'
+                );
 
-                    console.log(title, "\n", imageFile, "\n", categoryId);
-
+                // Si tout est bon en envoit l'image au serveur
+                validation == 'oui' ? uploadImage(imageFile, title, categoryId) : "";
 } // fin de fonction
+
+
+
+
+
+
+
+// Envoi de l'image et du projet à l'api
+function uploadImage(image, title, categoryId) {
+    let userToken = sessionStorage.getItem('token');
+
+        // On construit le formData et on lui applique le body
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('title', title);
+        formData.append('category', categoryId);
+
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json', 
+                'Authorization': `Bearer ${userToken}`
+            },
+            body: formData
+        }).then(response => {
+            document.querySelector(".modalPage").innerHTML = '';
+            document.querySelector(".modalPage").appendChild(modalPage1());
+            document.querySelector(".modalTitre").textContent = 'Galerie photo';
+
+            loadGallery();
+        })
+        .catch(function(err) {
+            // message d'erreur
+            console.log(err);
+        });
+}

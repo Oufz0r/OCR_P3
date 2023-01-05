@@ -114,9 +114,9 @@ loginBtn.addEventListener('click', (e) => {
 
 // Au click dans un des deux input de login on clean la div de message d'erreur
 inputEmail.addEventListener('click', () => {
-    msgLogDiv.innerHTML = '';
+    msgLogDiv.textContent = '';
 });
 
 inputPassword.addEventListener('click', () => {
-    msgLogDiv.innerHTML = '';
+    msgLogDiv.textContent = '';
 });

@@ -213,6 +213,11 @@ function editorMode() {
     let editBtn = divEditorBig.querySelector("input[type='submit']");
         htmlBox.insertBefore(divEditorBig, bodyBox);
 
+    // rework petits liens d'edition
+    function createEdit(divClass, iconClass, text, clickEvent) {
+        // création de la div, setAttribute, etc..
+    }
+
     // Petit lien d'édition
     let divEditorSmall1 = document.createElement("div");
         divEditorSmall1.setAttribute('class', 'editDiv editDiv1');

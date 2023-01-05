@@ -160,13 +160,14 @@ input[type="submit"] + .removeAtEdit, input[value=Tous] {
     flex-flow: row wrap;
     margin: 0px 90px 30px 90px;
     height: 400px;
-    /* overflow: auto; */
     overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 /* cacher la scroll bar pour ne pas briser le flex-wrap des 5 columns */
 .modalGalerie::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .modalBar {

@@ -21,7 +21,7 @@ function newFigCross(e) {
         newImg.crossOrigin = "anonymous";
         newImg.style.width = '80px';
         // appel de la fonction de survol
-        newImg.addEventListener('mouseover', newFigCross);
+        newImg.addEventListener('load', newFigCross);
         newFig.appendChild(newImg);
 
     let TrashIcon = document.createElement("span");
@@ -204,7 +204,9 @@ let modalAdd = document.createElement("input");
 loadGalleryMini();
 
 // text supprimer la galerie
-modalAddDel.innerHTML += "<p>Supprimer la galerie</p>";
+let modalNewParagraph = document.createElement('p');
+modalNewParagraph.textContent = 'Supprimer la galerie';
+modalAddDel.appendChild(modalNewParagraph);
 
 // Changement de la modal en "Ajout photo"
 modalAddDel.firstChild.addEventListener('click', () => {
@@ -258,23 +260,25 @@ let fileLabel = document.createElement("label");
 
 // icone du file input
 let labelDiv = document.createElement("div");
+labelDiv.setAttribute("id", "labelImg");
     fileLabel.appendChild(labelDiv);
-    labelDiv.innerHTML += '<i class="fa-regular fa-image"></i>';
-    labelDiv.setAttribute("id", "labelImg");
+let newIcon = document.createElement('i');
+    newIcon.setAttribute('class', 'fa-regular fa-image');
+    labelDiv.appendChild(newIcon);
 
 // bouton du file input
 labelDiv = document.createElement("div");
+labelDiv.setAttribute("id", "labelBtn");
     fileLabel.appendChild(labelDiv);
-    labelDiv.setAttribute("id", "labelBtn");
-labelBtn = document.createElement("div");
-    labelDiv.appendChild(labelBtn);
-    labelBtn.textContent = "+ Ajouter photo";
+newDiv = document.createElement('div');
+    newDiv.textContent = "+ Ajouter photo";
+    labelDiv.appendChild(newDiv);
 
 // restrictions du file input
 labelDiv = document.createElement("div");
     fileLabel.appendChild(labelDiv);
     labelDiv.setAttribute("id", "labelMax");
-    labelDiv.textContent = 'jpg, png : 4mo max';
+    labelDiv.textContent = 'jpg, png : 4Mo max';
 
 // titre
 fileLabel = document.createElement("label");
@@ -423,8 +427,10 @@ function imgRemove() {
 
 // Si on reclique sur l'input file on reset son contenu
 function imgChange(e) {
-    checkFile = e.target.files[0].name;
-    checkFile != null ? showImg(checkFile) : "";
+    e.target.value ? (
+    checkFile = e.target.files[0].name,
+    checkFile != null ? showImg(checkFile) : ""
+    ) : "";
 }
 
 

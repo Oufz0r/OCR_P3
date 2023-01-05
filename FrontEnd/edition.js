@@ -5,10 +5,23 @@ function newFigureMini(imgId, imgUrl, imgTitle) {
         modalGalerie.appendChild(newFig);
         newFig.setAttribute("class", "projets");
         newFig.setAttribute("data-id", imgId);
+        
+
+        // fonction pour afficher la croix sur l'image miniature au survol
+function newFigCross(e) {
+    e.target.addEventListener('mouseover', (e) => {
+        e.target.parentElement.querySelector(".dragCross").style.display = "inline";
+    });
+    e.target.addEventListener('mouseout', (e) => {
+        e.target.parentElement.querySelector(".dragCross").style.display = "none";
+    });
+}
 
     let newImg = document.createElement("img");
         newImg.crossOrigin = "anonymous";
         newImg.style.width = '80px';
+        // appel de la fonction de survol
+        newImg.addEventListener('mouseover', newFigCross);
         newFig.appendChild(newImg);
 
     let TrashIcon = document.createElement("span");
@@ -84,12 +97,12 @@ let moveIconContent = document.createElement("i");
     moveIcon.setAttribute('class', 'dragCross');
 
 
-newFig.addEventListener('mouseover', (e) => {
-    e.target.parentElement.querySelector(".dragCross").style.display = "inline";
-});
-newFig.addEventListener('mouseout', (e) => {
-    e.target.parentElement.querySelector(".dragCross").style.display = "none";
-});
+// newFig.addEventListener('mouseover', (e) => {
+//     e.target.parentElement.querySelector(".dragCross").style.display = "inline";
+// });
+// newFig.addEventListener('mouseout', (e) => {
+//     e.target.parentElement.querySelector(".dragCross").style.display = "none";
+// });
 };
 
 
@@ -479,7 +492,7 @@ function addNewProjectApply(title, imageUrl, categoryId) {
     let imageFile = document.getElementById('img-file').files[0];
 
         // On vérifie l'extension de l'image
-                imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? formError('Formulaire Valide') : (
+                imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? "" : (
                     formError("Le format de votre image n'est pas valide."),
                     validation = 'non'
                 )

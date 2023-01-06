@@ -86,7 +86,7 @@ function categorieOnClick(e) {
     e.preventDefault();
     let categorieDataId = e.target.getAttribute("data-categorie-id");
     // console.log(e.target);
-    console.log(categorieDataId);
+    // console.log(categorieDataId);
     loadGallery(categorieDataId);
     // works
 };

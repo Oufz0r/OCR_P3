@@ -1,5 +1,6 @@
 document.body.style.backgroundColor = "#FFFEF8";
-document.body.style.maxWidth = "1440px";
+// document.body.style.maxWidth = "1440px";
+// document.body.style.maxWidth = "100%";
 
 const mainBox = document.querySelector("main");
 mainBox.style.display = "flex";
@@ -18,7 +19,20 @@ erreurTitre.style.fontWeight = "400";
 
 
 const loginGo = document.querySelectorAll("nav ul li");
-loginGo[2].style.fontWeight = "bold";
+loginGo[2].style.fontWeight = "600";
+
+// On va chercher les li pour les espacer
+for(n=0; n < loginGo.length; n++)
+{
+    loginGo[n].style.marginLeft = '35px';
+}
+
+// retour page projets
+function linkProjets() {
+    window.location.href = "index.html";
+};
+
+loginGo[0].addEventListener('click', linkProjets);
 
 const imgHeader = document.querySelector("header img");
 imgHeader.style.width = "20px";
@@ -32,14 +46,19 @@ inputTxt[1].style.width = "379px";
 
 
 
+// corriger Email en E-mail
+let emailLabel = document.querySelector('label[for="email"]');
+emailLabel.textContent = 'E-mail';
+
+
+
 const inputSubmit = document.querySelector("input[type='submit']");
 inputSubmit.style.width = "179px";
 inputSubmit.style.height = "36px";
 inputSubmit.style.fontSize = "14px";
 inputSubmit.style.fontWeight = "700";
 
-let footerWork = document.querySelector("footer");
-footerWork.setAttribute('class', 'foot-rework');
+
 
 
 

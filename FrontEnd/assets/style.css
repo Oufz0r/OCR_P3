@@ -186,3 +186,160 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS de l'INDEX RETOUCHES */
+#introduction .indexParagraph {
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #3D3D3D;
+}
+
+.titreIntro {
+    font-size: 34px;
+}
+
+#formBtn {
+    display: flex;
+    width: auto;
+    justify-content: center;
+}
+
+#contact {
+    width: 379px;
+	margin-top: 100px;
+}
+
+#contact input[type='submit'] {
+    padding: 0px 10px 0px 10px;
+    min-width: 100px;
+    height: 37px;
+    margin: 40px auto;
+    background-color: #1D6154;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#contact label {
+	display: flex;
+	align-items: flex-end;
+	width: 380px;
+	height: 37px;
+    margin: 0;
+	padding: 0 0 10px 0;
+	font-weight: 500;
+}
+
+
+body {
+    max-width: 100%;
+	padding: 0 300px;
+	background-color: #FFFEF8;
+}
+
+header {
+    margin: 50px 0px 50px 0px;
+    /* padding: 0 280px; */
+	width: auto;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0 auto;
+	/* margin: 0 380px; */
+	width: 80%;
+}
+
+#introduction article {
+	max-width: 440px;
+}
+
+#introduction img {
+	margin: 0;
+	/* width: 560px; */
+	width: 90%;
+}
+
+footer {
+    display: flex;
+	position: absolute;
+    justify-content: flex-end;
+    background-color: white;
+    font-weight: 300;
+	left: 0;
+    width: 100%;
+}
+
+.footlog {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer nav ul {
+    margin: 20px 100px;
+}
+
+
+
+
+
+
+
+
+
+/* ========== CSS de l'INDEX en mode Edition ========== */
+.editorBig {
+    font-family: Work Sans;
+    z-index: 2;
+    background: black;
+    width: 100%;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+}
+
+input[value='publier les changements'] {
+    font-family: Work Sans;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: white;
+    color: black;
+    width: auto;
+    border: none;
+    padding: 11px 23px 11px 23px;
+    margin: 0px 0px 0px 20px;
+}
+
+.editDiv {
+    max-width: 100px;
+    color: black;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.editDiv1 {margin: 15px 0px 15px 2px;}
+
+.editDiv2 {margin: -40px 0 0 0;}
+
+.editDiv3 {
+    position: relative;
+    bottom: -25px;
+    left: 180px;
+    margin: 0 auto;
+}

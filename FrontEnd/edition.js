@@ -5,7 +5,7 @@ function newFigureMini(imgId, imgUrl, imgTitle) {
         modalGalerie.appendChild(newFig);
         newFig.setAttribute("class", "projets");
         newFig.setAttribute("data-id", imgId);
-        
+
 
         // fonction pour afficher la croix sur l'image miniature au survol
 function newFigCross(e) {
@@ -51,6 +51,9 @@ function newFigCross(e) {
 
 
 
+
+
+
 // Suppression du projet
 function deleteImg(e) {
     let id = e.target.getAttribute("data-del-id");
@@ -69,20 +72,18 @@ function deleteImg(e) {
         })
         })
         .then(function(){
-            // rien à ajouter
+            // Si tout est bon, on supprime l'image du DOM (portfolio et mini galerie)
+            const nbToDel = document.querySelectorAll("[data-del-id='"+imgId+"']").length;
+                for(n = 0; n < nbToDel; n++)
+                {
+                    document.querySelector("[data-id='"+imgId+"']").remove();
+                }
             
         })
         .catch(function(err) {
             // message d'erreur
             console.log(err);
         })
-
-        const nbToDel = document.querySelectorAll("[data-del-id='"+imgId+"']").length;
-    for(n = 0; n < nbToDel; n++)
-    {
-        document.querySelector("[data-id='"+imgId+"']").remove();
-        // console.log(nbToDel);
-    }
 };
 
 
@@ -96,13 +97,6 @@ let moveIconContent = document.createElement("i");
     moveIcon.appendChild(moveIconContent);
     moveIcon.setAttribute('class', 'dragCross');
 
-
-// newFig.addEventListener('mouseover', (e) => {
-//     e.target.parentElement.querySelector(".dragCross").style.display = "inline";
-// });
-// newFig.addEventListener('mouseout', (e) => {
-//     e.target.parentElement.querySelector(".dragCross").style.display = "none";
-// });
 };
 
 
@@ -118,8 +112,6 @@ function loadGalleryMini() {
     })
     .then(function(value) {
         const entries = value.length;
-        // clean gallery
-        // newGalerie.innerHTML = "";
         for(let n = 0; n < entries; n++)
         {
             let imgId = value[n].id;
@@ -468,7 +460,7 @@ function addNewProject() {
         // rechercher l'element <option> avec la class checkCategorieName
         checkCategorie ? (checkCategorieId = document.querySelector('[name="'+checkCategorie+'"]').getAttribute('data-id-cat')) : "";
 
-        checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectApply(checkTitre, checkImg, checkCategorieId) : formError('Il manque quelque chose à votre formulaire.');
+        checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectCheck(checkTitre, checkImg, checkCategorieId) : formError('Il manque quelque chose à votre formulaire.');
 
         // On efface le message au bout de 3 secondes
         setTimeout(() => {msgRefuse.textContent = ''}, 3000);
@@ -489,7 +481,7 @@ function formError(msg) {
 
 
 // Controle de l'extension et du poids de l'image
-function addNewProjectApply(title, imageUrl, categoryId) {
+function addNewProjectCheck(title, imageUrl, categoryId) {
     let userToken = sessionStorage.getItem('token');
 
     let validation = 'oui';
@@ -508,7 +500,7 @@ function addNewProjectApply(title, imageUrl, categoryId) {
                     validation = 'non'
                 );
 
-                // Si tout est bon en envoit l'image au serveur
+                // Si tout est bon on envoit l'image au serveur
                 validation == 'oui' ? uploadImage(imageFile, title, categoryId) : "";
 } // fin de fonction
 

@@ -99,7 +99,7 @@ function newPar(text) {
 
 newPar("Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.");
 newPar("Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux, et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.");
-newPar("En cas de besoin, une équipe pluridisciplinaire constituée de : architecte DPLG, décorateur(trice).");
+newPar("En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice).");
 
 
 // const introArticle = document.querySelector("#introduction article");
@@ -202,14 +202,39 @@ function closeModal() {
 
 
 
+
+// Fonction pour créer une icone d'édition
+function createIcon(classes, parent, name, fonction) {
+    let creation = document.createElement('i');
+        creation.setAttribute('class', classes);
+        parent.appendChild(creation);
+        parent.innerHTML += ' '+name;
+        parent.addEventListener('click', fonction);
+}
+
+
+
+
+
+
+
 // mise en place des fonctions d'edition
 function editorMode() {
     // Bandeau d'édition
     let divEditorBig = document.createElement("div");
         divEditorBig.setAttribute('class', 'editorBig');
+    let editBigIcon = document.createElement('i');
+        editBigIcon.setAttribute('class', 'fa-regular fa-pen-to-square');
+        divEditorBig.appendChild(editBigIcon);
+        divEditorBig.textContent += 'Mode édition';
+    let editBigInput = document.createElement('input');
+        editBigInput.setAttribute('type', 'submit');
+        editBigInput.setAttribute('value', 'publier les changements');
+        divEditorBig.appendChild(editBigInput);
 
-        divEditorBig.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> Mode édition
-        <input type="submit" value="publier les changements">`;
+        // divEditorBig.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> Mode édition
+        // <input type="submit" value="publier les changements">`;
+
     let editBtn = divEditorBig.querySelector("input[type='submit']");
         htmlBox.insertBefore(divEditorBig, bodyBox);
 
@@ -218,14 +243,20 @@ function editorMode() {
     // Petit lien d'édition
     let divEditorSmall = document.createElement("div");
         divEditorSmall.setAttribute('class', 'editDiv editDiv1');
-        divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        // Création de l'icon
+        createIcon('fa-regular fa-pen-to-square', divEditorSmall, 'modifier');
+        // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+
         // insertion du lien
         introRight.insertBefore(divEditorSmall, introRight.children[0]);
 
     
     divEditorSmall = document.createElement("div");
         divEditorSmall.setAttribute('class', 'editDiv editDiv2');
-        divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        // Création de l'icon
+        createIcon('fa-regular fa-pen-to-square', divEditorSmall, 'modifier');
+        // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+
     // insertion du lien
     let presLeft = document.querySelector("#introduction figure");
         mainBox.insertBefore(divEditorSmall, mainBox.children[1]);
@@ -233,8 +264,11 @@ function editorMode() {
 
     divEditorSmall = document.createElement("div");
         divEditorSmall.setAttribute('class', 'editDiv editDiv3');
-        divEditorSmall.addEventListener('click', openModal);
-        divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+        // Création de l'icon
+        createIcon('fa-regular fa-pen-to-square', divEditorSmall, 'modifier', openModal);
+        // divEditorSmall.addEventListener('click', openModal);
+        // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+
     // insertion du lien
         portfolioBox.insertBefore(divEditorSmall, portfolioBox.children[0]);
 

@@ -202,8 +202,8 @@ modalAddDel.appendChild(modalNewParagraph);
 
 // Changement de la modal en "Ajout photo"
 modalAddDel.firstChild.addEventListener('click', () => {
-    document.querySelector(".modalPage").innerHTML = '';
-    document.querySelector(".modalPage").appendChild(modalPage2());
+    document.querySelector("#modal").removeChild(page1);
+    document.querySelector("#modal").appendChild(modalPage2());
     document.querySelector(".modalTitre").textContent = 'Ajout photo';
     // createModal('Ajout photo', modalPage2());
 });
@@ -225,7 +225,6 @@ function modalPage2() {
 let page2 = document.createElement("div");
 page2.setAttribute("id", "page2");
 page2.setAttribute("class", "modalPage flex-col");
-page2.style.display = "flex";
 
 // création du formulaire
 let formulaire = document.createElement("form");
@@ -363,8 +362,8 @@ let modalArrowContent = document.createElement('i');
 
 // Retour à la modal Galerie
 modalArrow.addEventListener('click', () => {
-    document.querySelector(".modalPage").innerHTML = '';
-    document.querySelector(".modalPage").appendChild(modalPage1());
+    document.querySelector("#modal").removeChild(page2);
+    document.querySelector("#modal").appendChild(modalPage1());
     document.querySelector(".modalTitre").textContent = 'Galerie photo';
 });
 
@@ -454,16 +453,16 @@ function buttonGrey() {
 
 // Ajout d'un projet
 function addNewProject() {
-        checkImg = document.getElementById("img-file").value;
-        checkTitre = document.getElementById("titre").value;
-        checkCategorie = document.getElementById("categorie").value;
-        // rechercher l'element <option> avec la class checkCategorieName
-        checkCategorie ? (checkCategorieId = document.querySelector('[name="'+checkCategorie+'"]').getAttribute('data-id-cat')) : "";
-
-        checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectCheck(checkTitre, checkImg, checkCategorieId) : formError('Il manque quelque chose à votre formulaire.');
-
-        // On efface le message au bout de 3 secondes
-        setTimeout(() => {msgRefuse.textContent = ''}, 3000);
+    checkImg = document.getElementById("img-file").value;
+    checkTitre = document.getElementById("titre").value;
+    checkCategorie = document.getElementById("categorie").value;
+    // rechercher l'element <option> avec la class checkCategorieName
+    checkCategorie ? (checkCategorieId = document.querySelector('[name="'+checkCategorie+'"]').getAttribute('data-id-cat')) : "";
+    
+    checkImg != "" && checkTitre != "" && checkCategorie != "" ? addNewProjectCheck(checkTitre, checkImg, checkCategorieId) : formError('Il manque quelque chose à votre formulaire.');
+    
+    // On efface le message au bout de 3 secondes
+    setTimeout(() => {msgRefuse.textContent = ''}, 3000);
 }
 
 
@@ -483,26 +482,26 @@ function formError(msg) {
 // Controle de l'extension et du poids de l'image
 function addNewProjectCheck(title, imageUrl, categoryId) {
     let userToken = sessionStorage.getItem('token');
-
+    
     let validation = 'oui';
-
+    
     // On récupère l'image choisie
     let imageFile = document.getElementById('img-file').files[0];
-
-        // On vérifie l'extension de l'image
-                imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? "" : (
-                    formError("Le format de votre image n'est pas valide."),
-                    validation = 'non'
-                )
-        // On vérifie le poids de l'image <= 4Mo
-                imageFile.size <= 1024*4000 ? "" : (
-                    formError("L'image dépasse la taille maximum autorisée."),
-                    validation = 'non'
-                );
-
-                // Si tout est bon on envoit l'image au serveur
-                validation == 'oui' ? uploadImage(imageFile, title, categoryId) : "";
-} // fin de fonction
+    
+    // On vérifie l'extension de l'image
+    imageFile.type == 'image/png' || imageFile.type == 'image/jpeg' || imageFile.type == 'image/jpg' ? "" : (
+        formError("Le format de votre image n'est pas valide."),
+        validation = 'non'
+    )
+    // On vérifie le poids de l'image <= 4Mo
+    imageFile.size <= 1024*4000 ? "" : (
+        formError("L'image dépasse la taille maximum autorisée."),
+        validation = 'non'
+    );
+    
+    // Si tout est bon on envoit l'image au serveur
+    validation == 'oui' ? uploadImage(imageFile, title, categoryId) : "";
+}
 
 
 
@@ -514,28 +513,28 @@ function addNewProjectCheck(title, imageUrl, categoryId) {
 function uploadImage(image, title, categoryId) {
     let userToken = sessionStorage.getItem('token');
 
-        // On construit le formData et on lui applique le body
-        const formData = new FormData();
-        formData.append('image', image);
-        formData.append('title', title);
-        formData.append('category', categoryId);
+    // On construit le formData et on lui applique le body
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('title', title);
+    formData.append('category', categoryId);
 
-        fetch('http://localhost:5678/api/works', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json', 
-                'Authorization': `Bearer ${userToken}`
-            },
-            body: formData
-        }).then(response => {
-            document.querySelector(".modalPage").innerHTML = '';
-            document.querySelector(".modalPage").appendChild(modalPage1());
-            document.querySelector(".modalTitre").textContent = 'Galerie photo';
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json', 
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: formData
+    }).then(response => {
+        document.querySelector("#modal").removeChild(page2);
+        document.querySelector("#modal").appendChild(modalPage1());
+        document.querySelector(".modalTitre").textContent = 'Galerie photo';
 
-            loadGallery();
-        })
-        .catch(function(err) {
-            // message d'erreur
-            console.log(err);
-        });
+        loadGallery();
+    })
+    .catch(function(err) {
+        // message d'erreur
+        console.log(err);
+    });
 }

@@ -102,23 +102,9 @@ newPar("Chaque projet sera étudié en commun, de façon à mettre en valeur les
 newPar("En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice).");
 
 
-// const introArticle = document.querySelector("#introduction article");
-
-
-
-// resize photo
-// introRight.style.padding = "0px 0px 0px 100px";
-// introRight.style.marginLeft = "140px";
-
-const presImg = document.querySelector("#introduction img");
-// presImg.style.margin = "0px";
-// presImg.style.width = "560px";
-// presImg.style.padding = "0px 100px 0px 0px";
-
-
+// const presImg = document.querySelector("#introduction img");
 
 // div interne de l'article d'introduction
-// nouvelleDiv.style.width = "410px";
 nouvelleDiv.style.width = "auto";
 
 
@@ -162,25 +148,11 @@ newGalerie.style.marginTop = "20px";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Vérification du token de la session
 let userSessionId = sessionStorage.getItem("id");
 let userSessionToken = sessionStorage.getItem("token");
 
 userSessionId && userSessionToken ? editorMode() : "";
-
 
 
 
@@ -199,10 +171,6 @@ function closeModal() {
 
 
 
-
-
-
-
 // Fonction pour créer une icone d'édition
 function createIcon(classes, parent, name, fonction) {
     let creation = document.createElement('i');
@@ -216,9 +184,7 @@ function createIcon(classes, parent, name, fonction) {
 
 
 
-
-
-// mise en place des fonctions d'edition
+// mise en place des fonctions d'edition une fois connecté
 function editorMode() {
     // Bandeau d'édition
     let divEditorBig = document.createElement("div");
@@ -255,7 +221,6 @@ function editorMode() {
         divEditorSmall.setAttribute('class', 'editDiv editDiv2');
         // Création de l'icon
         createIcon('fa-regular fa-pen-to-square', divEditorSmall, 'modifier');
-        // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
 
     // insertion du lien
     let presLeft = document.querySelector("#introduction figure");
@@ -269,21 +234,18 @@ function editorMode() {
         // divEditorSmall.addEventListener('click', openModal);
         // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
 
-    // insertion du lien
+    // insertion du lien avant "Mes Projets"
         portfolioBox.insertBefore(divEditorSmall, portfolioBox.children[0]);
 
-    // suppression des boutons de catégorie et ajout de marge
+
+    // display none des boutons de catégorie et ajout de marge
         document.querySelector("#formBtn").style.display = "none";
         document.querySelector("#portfolio h2").style.marginBottom = '80px';
 
-    // login to logout
+
+    // passer le li login en logout une fois connecté
         stylizeLi = document.querySelectorAll("nav ul li");
         stylizeLi[2].textContent = "logout";
-    // let logoutLink = document.createElement("li");
-    // logoutLink.style.margin = '0 0 0 35px';
-    // let ulBox = document.querySelector("nav ul");
-    //     ulBox.insertBefore(logoutLink, ulBox.children[2]);
-    //     logoutLink.textContent = "logout";
 };
 
 
@@ -302,11 +264,12 @@ emailLabel.textContent = 'E-mail';
 
 
 
-// Fonction pour rediriger au clique
+// Fonction pour rediriger au clique sur login
 function linkLogin() {
     window.location.href = "login.html";
 };
 
+// Fonction pour supprimer la session au clique sur logout
 function linkLogout() {
     sessionStorage.clear();
     window.location.href = "index.html";
@@ -320,5 +283,5 @@ stylizeLi = document.querySelectorAll("nav ul li");
 userSessionId && userSessionToken ? stylizeLi[2].addEventListener("click", linkLogout) : stylizeLi[2].addEventListener("click", linkLogin);
 
 
-let footerWork = document.querySelector("footer");
-footerWork.setAttribute('class', 'foot-rework');
+// let footerWork = document.querySelector("footer");
+// footerWork.setAttribute('class', 'foot-rework');

@@ -1,130 +1,5 @@
 
-function newFigureMini(imgId, imgUrl, imgTitle) {
-    let newFig = document.createElement("figure");
-    let modalGalerie = document.querySelector(".modalGalerie");
-        modalGalerie.appendChild(newFig);
-        newFig.setAttribute("class", "projets");
-        newFig.setAttribute("data-id", imgId);
 
-
-        // fonction pour afficher la croix sur l'image miniature au survol
-function newFigCross(e) {
-    e.target.addEventListener('mouseover', (e) => {
-        e.target.parentElement.querySelector(".dragCross").style.display = "inline";
-    });
-    e.target.addEventListener('mouseout', (e) => {
-        e.target.parentElement.querySelector(".dragCross").style.display = "none";
-    });
-}
-
-    let newImg = document.createElement("img");
-        newImg.crossOrigin = "anonymous";
-        newImg.style.width = '80px';
-        // appel de la fonction de survol
-        newImg.addEventListener('load', newFigCross);
-        newFig.appendChild(newImg);
-
-    let TrashIcon = document.createElement("span");
-        newFig.appendChild(TrashIcon);
-        TrashIcon.setAttribute("data-del-id", imgId);
-        TrashIcon.setAttribute("class", 'trash');
-    
-// ajout de l'icon à l'intérieur de la TrashBox (span)
-    let trashContent = document.createElement('i');
-        TrashIcon.appendChild(trashContent);
-        trashContent.setAttribute('class', 'fa-solid fa-trash-can');
-        trashContent.setAttribute('data-del-id', imgId);
-
-    let newFigCap = document.createElement("figcaption");
-        newFigCap.setAttribute("data-id", imgId);
-        newFigCap.setAttribute("class", "editSpan");
-    let newFigCapSpan = document.createElement("span");
-        newFigCapSpan.textContent += "éditer";
-        newFig.appendChild(newFigCap);
-        newFigCap.appendChild(newFigCapSpan);
-
-    // Application du src et alt
-    newImg.setAttribute("src", imgUrl);
-    newImg.setAttribute("alt", imgTitle);
-
-
-
-
-
-
-
-
-// Suppression du projet
-function deleteImg(e) {
-    let id = e.target.getAttribute("data-del-id");
-
-    let userToken = sessionStorage.getItem('token');
-
-    fetch("http://localhost:5678/api/works/"+id, {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json', 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userToken}`
-        },
-        body: JSON.stringify({
-            id: id
-        })
-        })
-        .then(function(){
-            // Si tout est bon, on supprime l'image du DOM (portfolio et mini galerie)
-            const nbToDel = document.querySelectorAll("[data-del-id='"+imgId+"']").length;
-                for(n = 0; n < nbToDel; n++)
-                {
-                    document.querySelector("[data-id='"+imgId+"']").remove();
-                }
-            
-        })
-        .catch(function(err) {
-            // message d'erreur
-            console.log(err);
-        })
-};
-
-
-TrashIcon.addEventListener('click', deleteImg);
-// TrashIcon.parentElement.addEventListener('click', deleteImg);
-
-let moveIcon = document.createElement("span");
-        newFig.appendChild(moveIcon);
-let moveIconContent = document.createElement("i");
-    moveIconContent.setAttribute('class', 'fa-solid fa-arrows-up-down-left-right');
-    moveIcon.appendChild(moveIconContent);
-    moveIcon.setAttribute('class', 'dragCross');
-
-};
-
-
-
-
-
-
-
-function loadGalleryMini() {
-    fetch("http://localhost:5678/api/works")
-    .then(function(res) {
-        return res.json();
-    })
-    .then(function(value) {
-        const entries = value.length;
-        for(let n = 0; n < entries; n++)
-        {
-            let imgId = value[n].id;
-            let imgUrl = value[n].imageUrl;
-            let imgName = value[n].title;
-            let imgCatId = value[n].category.id;
-            newFigureMini(imgId, imgUrl, imgName);
-        }
-    })
-    .catch(function(err) {
-        console.log(err);
-    });
-};
 
 
 
@@ -378,6 +253,135 @@ return page2;
 
 
 
+// Création de figure pour la galerie modale
+function newFigureMini(imgId, imgUrl, imgTitle) {
+    let newFig = document.createElement("figure");
+    let modalGalerie = document.querySelector(".modalGalerie");
+        modalGalerie.appendChild(newFig);
+        newFig.setAttribute("class", "projets");
+        newFig.setAttribute("data-id", imgId);
+
+
+    // fonction pour afficher/cacher la croix sur l'image miniature au survol
+    function newFigCross(e) {
+        e.target.addEventListener('mouseover', (e) => {
+            e.target.parentElement.querySelector(".dragCross").style.display = "inline";
+        });
+        e.target.addEventListener('mouseout', (e) => {
+            e.target.parentElement.querySelector(".dragCross").style.display = "none";
+        });
+    }
+
+    let newImg = document.createElement("img");
+        newImg.crossOrigin = "anonymous";
+        newImg.style.width = '80px';
+        // appel de la fonction de survol
+        newImg.addEventListener('load', newFigCross);
+        newFig.appendChild(newImg);
+
+    let TrashIcon = document.createElement("span");
+        newFig.appendChild(TrashIcon);
+        TrashIcon.setAttribute("data-del-id", imgId);
+        TrashIcon.setAttribute("class", 'trash');
+    
+    // ajout de l'icon à l'intérieur de la TrashBox (span)
+    let trashContent = document.createElement('i');
+        TrashIcon.appendChild(trashContent);
+        trashContent.setAttribute('class', 'fa-solid fa-trash-can');
+        trashContent.setAttribute('data-del-id', imgId);
+
+    let newFigCap = document.createElement("figcaption");
+        newFigCap.setAttribute("data-id", imgId);
+        newFigCap.setAttribute("class", "editSpan");
+    let newFigCapSpan = document.createElement("span");
+        newFigCapSpan.textContent += "éditer";
+        newFig.appendChild(newFigCap);
+        newFigCap.appendChild(newFigCapSpan);
+
+    // Application du src et alt à l'image newImg
+    newImg.setAttribute("src", imgUrl);
+    newImg.setAttribute("alt", imgTitle);
+
+
+
+// Suppression du projet
+function deleteImg(e) {
+    let id = e.target.getAttribute("data-del-id");
+
+    let userToken = sessionStorage.getItem('token');
+
+    fetch("http://localhost:5678/api/works/"+id, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: JSON.stringify({
+            id: id
+        })
+        })
+        .then(function(){
+            // Si tout est bon, on supprime l'image du DOM (portfolio et mini galerie)
+            const nbToDel = document.querySelectorAll("[data-del-id='"+imgId+"']").length;
+                for(n = 0; n < nbToDel; n++)
+                {
+                    document.querySelector("[data-id='"+imgId+"']").remove();
+                }
+            
+        })
+        .catch(function(err) {
+            // message d'erreur
+            console.log(err);
+        })
+};
+
+
+TrashIcon.addEventListener('click', deleteImg);
+// TrashIcon.parentElement.addEventListener('click', deleteImg);
+
+let moveIcon = document.createElement("span");
+        newFig.appendChild(moveIcon);
+let moveIconContent = document.createElement("i");
+    moveIconContent.setAttribute('class', 'fa-solid fa-arrows-up-down-left-right');
+    moveIcon.appendChild(moveIconContent);
+    moveIcon.setAttribute('class', 'dragCross');
+
+};
+
+
+
+
+
+
+
+function loadGalleryMini() {
+    fetch("http://localhost:5678/api/works")
+    .then(function(res) {
+        return res.json();
+    })
+    .then(function(value) {
+        const entries = value.length;
+        for(let n = 0; n < entries; n++)
+        {
+            let imgId = value[n].id;
+            let imgUrl = value[n].imageUrl;
+            let imgName = value[n].title;
+            let imgCatId = value[n].category.id;
+            newFigureMini(imgId, imgUrl, imgName);
+        }
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
+};
+
+
+
+
+
+
+
 
 
 
@@ -394,10 +398,17 @@ function showImg(url) {
         image.setAttribute("id", "imageToUpload");
         image.style.maxHeight = '169px';
         image.file = imageFile;
+        console.log(image.file);
         formBox.appendChild(image);
 
     let reader = new FileReader();
-        reader.onload = (function(aImg) {return function(e) { aImg.src = e.target.result;}; }) (image);
+        reader.onload = (function(aImg) {
+            return function(e) {
+                aImg.src = e.target.result;
+            }; 
+        })
+        // on applique le src à image
+        (image);
         reader.readAsDataURL(imageFile);
 }
 
@@ -416,7 +427,7 @@ function imgRemove() {
 
 
 
-// Si on reclique sur l'input file on reset son contenu
+// Si l'input contient quelque chose on l'envoi à la fonction showImg
 function imgChange(e) {
     e.target.value ? (
     checkFile = e.target.files[0].name,

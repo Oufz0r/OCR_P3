@@ -3,19 +3,19 @@ document.body.style.backgroundColor = "#FFFEF8";
 // document.body.style.maxWidth = "100%";
 
 const mainBox = document.querySelector("main");
-mainBox.style.display = "flex";
-mainBox.style.flexDirection = "column";
+    mainBox.style.display = "flex";
+    mainBox.style.flexDirection = "column";
 
 const mainLink = document.querySelector("main a");
-mainLink.style.display = "flex";
-mainLink.style.justifyContent = "center";
-mainLink.style.color = "black";
+    mainLink.style.display = "flex";
+    mainLink.style.justifyContent = "center";
+    mainLink.style.color = "black";
 
 // Correction du Logo
 const erreurTitre = document.querySelector("header span");
-erreurTitre.style.margin = "5px 0 0 0";
-erreurTitre.style.fontSize = "10px";
-erreurTitre.style.fontWeight = "400";
+    erreurTitre.style.margin = "5px 0 0 0";
+    erreurTitre.style.fontSize = "10px";
+    erreurTitre.style.fontWeight = "400";
 
 
 const loginGo = document.querySelectorAll("nav ul li");
@@ -84,7 +84,7 @@ function storeTkn(id, token) {
 
 
 
-
+// Fonction de connexion
 function logIn(email,password) {
     fetch("http://localhost:5678/api/users/login", {
     method: 'POST',
@@ -106,7 +106,9 @@ function logIn(email,password) {
         let msgLog = "";
         let userId = value.id;
         let userToken = value.token;
+        // On vérifie que la combinaison email+password correspond bien à un id et un token
         userId !== null && userToken != null ? storeTkn(userId, userToken) : msgLog = "Erreur dans l’identifiant ou le mot de passe";
+        // Sinon on affiche un message d'erreur
         msgLogDiv.innerHTML += msgLog;
         // vérification
     })
@@ -118,7 +120,7 @@ function logIn(email,password) {
 
 
 
-// on pick le bouton de connexion et on affecte une fonction anonyme d'envoi de données
+// on pick le bouton de connexion et on affecte une fonction anonyme d'envoi de données vers logIn
 const loginBtn = document.querySelector('input[type="submit"]');
 loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -131,7 +133,7 @@ loginBtn.addEventListener('click', (e) => {
 
 
 
-// Au click dans un des deux input de login on clean la div de message d'erreur
+// Au click dans un des deux input de login on clean la div de message d'erreur de connexion
 inputEmail.addEventListener('click', () => {
     msgLogDiv.textContent = '';
 });

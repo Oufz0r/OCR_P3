@@ -1,3 +1,5 @@
+
+// Appel des catégories de l'api et création des boutons de filtre
 fetch("http://localhost:5678/api/categories")
 .then(function(res) {
     return res.json();
@@ -19,3 +21,41 @@ fetch("http://localhost:5678/api/categories")
 
 
 
+
+// Fonction pour la création des boutons (input:submit) de catégories
+function newBouton(btnName, categorieId, categorieOnClick) {
+    let newBtn = document.createElement("input");
+    newBtn.setAttribute("type", "submit");
+    newBtn.setAttribute("value", btnName);
+    newBtn.setAttribute("class", "removeAtEdit");
+    newBtn.setAttribute("data-categorie-id", categorieId);
+
+    newBtn.addEventListener('click', categorieOnClick);
+    let currentForm = document.querySelector("#formBtn");
+    currentForm.appendChild(newBtn);
+    newBtn.addEventListener('mouseover', function(e) {
+        e.target.style.backgroundColor = "#1D6154";
+        e.target.style.color = "white";
+    });
+    newBtn.addEventListener('mouseout', function(e) {
+        e.target.style.backgroundColor = "#FFFEF8";
+        e.target.style.color = "#1D6154";
+    });
+}
+
+
+
+// Le bouton Tous
+newBouton('Tous', '', categorieOnClick);
+
+
+
+// Filtre des projets par catégorie
+function categorieOnClick(e) {
+    e.preventDefault();
+    let categorieDataId = e.target.getAttribute("data-categorie-id");
+    // console.log(e.target);
+    // console.log(categorieDataId);
+    loadGallery(categorieDataId);
+    // works
+}

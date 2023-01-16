@@ -1,14 +1,3 @@
-window.onload = function(){
-    loadGallery();
-    }
-
-
-
-
-
-
-
-
 let htmlBox = document.querySelector("html");
 
 
@@ -17,6 +6,7 @@ let bodyBox = document.querySelector("body");
 // Suppression du span du logo pour correction
 const erreurTitre = document.querySelector("header span");
 erreurTitre.remove();
+
 // Création du span sous le logo
 const newTitreBox = document.querySelector("header h1");
 newSpan = document.createElement("span");
@@ -36,26 +26,20 @@ const imgHeader = document.querySelector("header img");
 imgHeader.style.width = "20px";
 
 
-// On se trouve sur la page projets, donc on met projets en gras
+// On se trouve sur la page projets, donc on met projets en gras ?
 // const projetsLi = document.querySelectorAll("nav ul li");
 // projetsLi[0].style.fontWeight = "600";
 
 
 // On va chercher les li pour les espacer
-let menuLi = document.querySelectorAll('nav ul li');
+let menuLi = document.querySelectorAll('header nav ul li');
 for(n=0; n < menuLi.length; n++)
 {
-    menuLi[n].style.marginLeft = '35px';
+    menuLi[n].style.marginLeft = '5%';
 }
 
 
 
-
-
-const mainBox = document.querySelector('main');
-// mainBox.style.margin = "0 380px";
-// mainBox.style.width = "950px";
-// mainBox.style.width = "85%";
 
 
 
@@ -97,24 +81,16 @@ function newPar(text) {
 };
 
 
+// Création des paragraphes d'introduction avec leur texte
 newPar("Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.");
 newPar("Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux, et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.");
 newPar("En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice).");
 
 
-// const presImg = document.querySelector("#introduction img");
-
-// div interne de l'article d'introduction
-nouvelleDiv.style.width = "auto";
 
 
 
-
-
-
-
-
-// Création du form
+// Création du form de filtre
 const newForm = document.createElement("form");
 newForm.setAttribute("action", "#");
 newForm.setAttribute("method", "get");
@@ -128,7 +104,7 @@ currentDiv.appendChild(newForm);
 
 
 
-// Suppression de la galerie fixe dans section #portfolio
+// Suppression de la galerie fixe dans la section #portfolio
 const galerie = document.querySelector("#portfolio .gallery");
 galerie.remove();
 
@@ -136,7 +112,7 @@ galerie.remove();
 const portfolioBox = document.querySelector("#portfolio");
 newDiv = document.createElement("div");
 portfolioBox.appendChild(newDiv);
-portfolioBox.style.marginTop = "100px";
+portfolioBox.style.marginTop = "80px";
 
 // Application de la class .gallery
 const newGalerie = document.querySelector("#portfolio div");
@@ -152,6 +128,7 @@ newGalerie.style.marginTop = "20px";
 let userSessionId = sessionStorage.getItem("id");
 let userSessionToken = sessionStorage.getItem("token");
 
+// Ouverture du mode édition si la session est bien composée d'un Id et d'un Token
 userSessionId && userSessionToken ? editorMode() : "";
 
 
@@ -183,9 +160,14 @@ function createIcon(classes, parent, name, fonction) {
 
 
 
+// const mainBox = document.querySelector('main');
+
+
+
 
 // mise en place des fonctions d'edition une fois connecté
 function editorMode() {
+    const mainBox = document.querySelector('main');
     // Bandeau d'édition
     let divEditorBig = document.createElement("div");
         divEditorBig.setAttribute('class', 'editorBig');
@@ -235,17 +217,17 @@ function editorMode() {
         // divEditorSmall.innerHTML += `<i class="fa-regular fa-pen-to-square"></i> modifier`;
 
     // insertion du lien avant "Mes Projets"
-        portfolioBox.insertBefore(divEditorSmall, portfolioBox.children[0]);
+    portfolioBox.insertBefore(divEditorSmall, portfolioBox.children[0]);
 
 
     // display none des boutons de catégorie et ajout de marge
-        document.querySelector("#formBtn").style.display = "none";
-        document.querySelector("#portfolio h2").style.marginBottom = '80px';
+    document.querySelector("#formBtn").style.display = "none";
+    document.querySelector("#portfolio h2").style.marginBottom = '80px';
 
 
     // passer le li login en logout une fois connecté
-        stylizeLi = document.querySelectorAll("nav ul li");
-        stylizeLi[2].textContent = "logout";
+    stylizeLi = document.querySelectorAll("nav ul li");
+    stylizeLi[2].textContent = "logout";
 };
 
 
@@ -281,7 +263,3 @@ stylizeLi = document.querySelectorAll("nav ul li");
 
 // en fonction de l'état connecté ou non connecté
 userSessionId && userSessionToken ? stylizeLi[2].addEventListener("click", linkLogout) : stylizeLi[2].addEventListener("click", linkLogin);
-
-
-// let footerWork = document.querySelector("footer");
-// footerWork.setAttribute('class', 'foot-rework');

@@ -398,7 +398,6 @@ function showImg(url) {
         image.setAttribute("id", "imageToUpload");
         image.style.maxHeight = '169px';
         image.file = imageFile;
-        console.log(image.file);
         formBox.appendChild(image);
 
     let reader = new FileReader();

@@ -20,11 +20,12 @@ const erreurTitre = document.querySelector("header span");
 
 const loginGo = document.querySelectorAll("nav ul li");
 loginGo[2].style.fontWeight = "600";
+loginGo[3].style.marginRight = "14px";
 
 // On va chercher les li pour les espacer
 for(n=0; n < loginGo.length; n++)
 {
-    loginGo[n].style.marginLeft = '35px';
+    loginGo[n].style.marginLeft = '5%';
 }
 
 // retour page projets
@@ -43,6 +44,7 @@ formLog.style.alignItems = "center";
 const inputTxt = document.querySelectorAll("input");
 inputTxt[0].style.width = "379px";
 inputTxt[1].style.width = "379px";
+
 
 
 
@@ -74,13 +76,20 @@ msgLogDiv.style.color = "darkred";
 
 
 
-// mise en storage du token
-function storeTkn(id, token) {
-    sessionStorage.setItem("id", id);
-    sessionStorage.setItem("token", token);
-    // alert(id+"/"+token);
-    window.location.href = "index.html";
-};
+
+
+// on pick le bouton de connexion et on affecte une fonction anonyme d'envoi de données vers logIn
+const loginBtn = document.querySelector('input[type="submit"]');
+loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    msgLogDiv.innerHTML = "";
+    let userEmail = document.querySelector('#email').value;
+    let userPassword = document.querySelector('#password').value;
+    // console.log(userEmail+"/"+userPassword);
+    logIn(userEmail,userPassword);
+});
+
+
 
 
 
@@ -120,16 +129,16 @@ function logIn(email,password) {
 
 
 
-// on pick le bouton de connexion et on affecte une fonction anonyme d'envoi de données vers logIn
-const loginBtn = document.querySelector('input[type="submit"]');
-loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    msgLogDiv.innerHTML = "";
-    let userEmail = document.querySelector('#email').value;
-    let userPassword = document.querySelector('#password').value;
-    // console.log(userEmail+"/"+userPassword);
-    logIn(userEmail,userPassword);
-});
+
+// mise en storage du token
+function storeTkn(id, token) {
+    sessionStorage.setItem("id", id);
+    sessionStorage.setItem("token", token);
+    // alert(id+"/"+token);
+    window.location.href = "index.html";
+};
+
+
 
 
 

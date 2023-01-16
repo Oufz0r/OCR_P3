@@ -29,11 +29,14 @@ function newBouton(btnName, categorieId, categorieOnClick) {
     newBtn.setAttribute("value", btnName);
     newBtn.setAttribute("class", "removeAtEdit");
     newBtn.setAttribute("data-categorie-id", categorieId);
+    newBtn.setAttribute('data-on', '0');
 
     newBtn.addEventListener('click', categorieOnClick);
     let currentForm = document.querySelector("#formBtn");
     currentForm.appendChild(newBtn);
+
     newBtn.addEventListener('mouseover', function(e) {
+        let buttonsDataOn = newBtn.getAttribute('data-on');
         e.target.style.backgroundColor = "#1D6154";
         e.target.style.color = "white";
     });
@@ -50,6 +53,8 @@ newBouton('Tous', '', categorieOnClick);
 
 
 
+
+
 // Filtre des projets par catégorie
 function categorieOnClick(e) {
     e.preventDefault();
@@ -59,3 +64,20 @@ function categorieOnClick(e) {
     loadGallery(categorieDataId);
     // works
 }
+
+
+
+// Garder le bouton cliqué en vert
+    // On reset les boutons
+    // buttons[n].setAttribute('data-on', '0');
+    // buttons[n].style.backgroundColor = "#FFFEF8";
+    // buttons[n].style.color = "#1D6154";
+    // console.log('lol');
+    // On affecte data-on sur 1 au bouton cliqué
+    // buttons[n].addEventListener('click', (e) => {
+    //     e.target.setAttribute('data-on', '1');
+    //     e.target.style.backgroundColor = "#1D6154";
+    //     e.target.style.color = "white";
+    //     console.log('lol2');
+    // });
+// }

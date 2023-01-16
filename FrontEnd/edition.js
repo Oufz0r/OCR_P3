@@ -202,7 +202,7 @@ fetch("http://localhost:5678/api/categories")
 .then(function(value) {
     const entries = value.length;
     
-    for(let n = 0; n < entries; n++)
+    for(n = 0; n < entries; n++)
     {
         let cateName = value[n].name;
         let cateId = value[n].id;
@@ -334,7 +334,7 @@ function deleteImg(e) {
             // message d'erreur
             console.log(err);
         })
-};
+}
 
 
 TrashIcon.addEventListener('click', deleteImg);
@@ -347,7 +347,7 @@ let moveIconContent = document.createElement("i");
     moveIcon.appendChild(moveIconContent);
     moveIcon.setAttribute('class', 'dragCross');
 
-};
+}
 
 
 
@@ -362,7 +362,7 @@ function loadGalleryMini() {
     })
     .then(function(value) {
         const entries = value.length;
-        for(let n = 0; n < entries; n++)
+        for(n = 0; n < entries; n++)
         {
             let imgId = value[n].id;
             let imgUrl = value[n].imageUrl;
@@ -374,7 +374,7 @@ function loadGalleryMini() {
     .catch(function(err) {
         console.log(err);
     });
-};
+}
 
 
 

@@ -487,11 +487,9 @@ function formError(msg) {
 
 
 
-
-
 // Controle de l'extension et du poids de l'image
 function addNewProjectCheck(title, imageUrl, categoryId) {
-    let userToken = sessionStorage.getItem('token');
+    // let userToken = sessionStorage.getItem('token');
     
     let validation = 'oui';
     

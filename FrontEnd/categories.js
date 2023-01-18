@@ -29,14 +29,12 @@ function newBouton(btnName, categorieId, categorieOnClick) {
     newBtn.setAttribute("value", btnName);
     newBtn.setAttribute("class", "removeAtEdit");
     newBtn.setAttribute("data-categorie-id", categorieId);
-    newBtn.setAttribute('data-on', '0');
 
     newBtn.addEventListener('click', categorieOnClick);
     let currentForm = document.querySelector("#formBtn");
     currentForm.appendChild(newBtn);
 
     newBtn.addEventListener('mouseover', function(e) {
-        let buttonsDataOn = newBtn.getAttribute('data-on');
         e.target.style.backgroundColor = "#1D6154";
         e.target.style.color = "white";
     });

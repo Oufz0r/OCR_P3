@@ -29,7 +29,7 @@ function newFigure(imgUrl, imgTitle, imgId) {
 
 // Fonction pour charger tous les projets du portfolio
 function loadGallery(categorieId) {
-    fetch("http://localhost:5678/api/works")
+    fetch("/api/works")
     .then(function(res) {
         return res.json();
     })

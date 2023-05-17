@@ -195,7 +195,7 @@ modalValide.addEventListener('click', (e) => {
 
 // pick dans l'api les différentes catégories
 // les ajouter à selectCategorie comme <option>
-fetch("http://localhost:5678/api/categories")
+fetch("/api/categories")
 .then(function(res) {
     return res.json();
 })
@@ -310,7 +310,7 @@ function deleteImg(e) {
 
     let userToken = sessionStorage.getItem('token');
 
-    fetch("http://localhost:5678/api/works/"+id, {
+    fetch("/api/works/"+id, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json', 
@@ -356,7 +356,7 @@ let moveIconContent = document.createElement("i");
 
 
 function loadGalleryMini() {
-    fetch("http://localhost:5678/api/works")
+    fetch("/api/works")
     .then(function(res) {
         return res.json();
     })
@@ -527,7 +527,7 @@ function uploadImage(image, title, categoryId) {
     formData.append('title', title);
     formData.append('category', categoryId);
 
-    fetch('http://localhost:5678/api/works', {
+    fetch('/api/works', {
         method: 'POST',
         headers: {
             'Accept': 'application/json', 

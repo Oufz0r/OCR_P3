@@ -82,7 +82,7 @@ msgLogDiv.style.color = "darkred";
 const loginBtn = document.querySelector('input[type="submit"]');
 loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    msgLogDiv.innerHTML = "";
+    msgLogDiv.textContent = "";
     let userEmail = document.querySelector('#email').value;
     let userPassword = document.querySelector('#password').value;
     // console.log(userEmail+"/"+userPassword);
@@ -95,7 +95,7 @@ loginBtn.addEventListener('click', (e) => {
 
 // Fonction de connexion
 function logIn(email,password) {
-    fetch("http://localhost:5678/api/users/login", {
+    fetch("/api/users/login", {
     method: 'POST',
     headers: {
         'Accept': 'application/json', 
@@ -118,7 +118,7 @@ function logIn(email,password) {
         // On vérifie que la combinaison email+password correspond bien à un id et un token
         userId !== null && userToken != null ? storeTkn(userId, userToken) : msgLog = "Erreur dans l’identifiant ou le mot de passe";
         // Sinon on affiche un message d'erreur
-        msgLogDiv.innerHTML += msgLog;
+        msgLogDiv.textContent = msgLog;
         // vérification
     })
     .catch(function(err) {
